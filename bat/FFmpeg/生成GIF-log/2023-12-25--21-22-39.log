@@ -1,0 +1,4 @@
+"C:\Users\Administrator\Desktop\Pix.gif"
+→	→"C:\Users\Administrator\Desktop\Pix1.gif"
+开始时间0--持续时间1.5--缩放1--变速0
+ffmpeg -ss 0 -t 1.5 -vf "scale=123x99,fps=10"

@@ -1,0 +1,1 @@
+C:\iperf-3.1.3-win64\iperf3.exe iperf3 -s
