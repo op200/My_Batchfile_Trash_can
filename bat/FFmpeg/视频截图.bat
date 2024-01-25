@@ -1,8 +1,10 @@
 @echo off
 color 70&title  ”∆µΩÿÕº
 
-if exist %1 (set in=%1
-goto A)
+if exist "%1" (
+	set in=%1
+	goto A
+)
 set /p in=Input:
 :A
 set in="%in:"=%"
