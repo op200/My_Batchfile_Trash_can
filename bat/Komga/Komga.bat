@@ -7,36 +7,56 @@ set x=0
 if %x%==0 (set "t=delims=") else (set "t=tokens=* skip=%x%")
 for /f "%t%" %%i in ('dir /a-d /b /on C:\Komga\komga-*.jar') do (
 	set n%x%=%%i
-	set /a x=x+1
+	set /a x+=1
 	goto M
 )
 
 Setlocal EnableDelayedExpansion
-set y=0
-set y1=%y%
-set m1=!n%y%!
-set v1=%m1:~6,-4%
-set /a y=y+1
-set y2=%y%
-set m2=!n%y%!
-set v2=%m2:~6,-4%
-if %v1% GEQ %v2% (set b=%y1%) else (set b=%y2%)
-if %x%==2 (goto J)
+set i=0
+set b=0
+set q=0.0.0.$
+:R
 
-:B
-set /a y=y+1
-if %y% EQU %x% (goto J)
-set y1=%y%
-set m1=!n%y%!
-set v1=%m1:~6,-4%
-set m2=!n%b%!
-set v2=%m2:~6,-4%
-if %v1% GEQ %v2% (set b=%y1%)
-goto B
+set v=!n%i%!
+set v=%v:~6,-4%.$
+
+set qc=%q%
+set qv=%v%
+:RC
+
+set q1=0
+:RCQ1
+set c=%qc:~0,1%
+if "%c%"=="$" goto R
+set qc=%qc:~1%
+if not "%c%"=="." (
+	set /a q1=q1*10+c
+	goto RCQ1
+)
+
+set v1=0
+:RCV1
+set c=%qv:~0,1%
+if "%c%"=="$" goto R
+set qv=%qv:~1%
+if not "%c%"=="." (
+	set /a v1=v1*10+c
+	goto RCV1
+)
+
+if %v1%==%q1% goto RC
+if %v1% GTR %q1% (
+	set b=%i%
+	set q=%v%
+)
+
+set /a i+=1
+if %i% LSS %x% goto R
+
 
 :J
 set j=!n%b%!
 Setlocal DisableDelayedExpansion
-set v=%j:~6,-4%
-title Komga %v%
+
+title Komga %j:~6,-4%
 java -jar "C:\Komga\%j%" --server.port=8097
